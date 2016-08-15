@@ -1,4 +1,4 @@
-# 24 Hour Fitness Locations
+# 24 Hour Fitness Mapping
 
 The 24 Hour Fitness chain of gyms has four different levels:
 
