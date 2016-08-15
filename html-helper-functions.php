@@ -47,8 +47,8 @@ function getListInHtml($html, $elementBeforeStartOfList) {
    $indexOfListSectionStart = strpos($html, $openingTag, $indexOfListSectionStart);
    $listHtml = substr($html, $indexOfListSectionStart);
 
-   $indexOfStatesListSectionEnd = strpos($listHtml, $closingTag) + strlen($closingTag);
-   $listHtml = substr($listHtml, 0, $indexOfStatesListSectionEnd);
+   $indexOfListSectionEnd = strpos($listHtml, $closingTag) + strlen($closingTag);
+   $listHtml = substr($listHtml, 0, $indexOfListSectionEnd);
 
    return $listHtml;
 }
