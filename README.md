@@ -1,11 +1,15 @@
 # 24 Hour Fitness Mapping
 
-The 24 Hour Fitness chain of gyms has four different levels:
+## What Is This?
+
+The 24 Hour Fitness chain of gyms has four different club types:
 
 * Active
 * Sport
 * Super Sport
 * Ultra Sport
+
+This project creates a Google Map with every 24 Hour Fitness location in the country on it along with their location and club type.
 
 ## Why Did I Write This?
 
