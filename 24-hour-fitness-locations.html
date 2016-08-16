@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>24-Hour Fitness Locations</title>
+        <script type="text/javascript" src="https://maps.google.com/maps/api/js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            var map;
+            var geocoder;
+            
+            function init() {
+                var mapCenter = new google.maps.LatLng(33.879408291879514, -118.04397583007812);
+                
+                var mapOptions = {
+                  zoom: 10,
+                  center: mapCenter,
+                  mapTypeId: google.maps.MapTypeId.ROADMAP
+                }
+                
+                map = new google.maps.Map(document.getElementById("map"), mapOptions);
+				
+                geocoder = new google.maps.Geocoder();
+                
+                $.getJSON("24-hour-fitness-locations.json", function(data) {
+                  var states = data.states;
+
+                  for(var i = 0; i < states.length; i++) {
+                    var state = states[i];
+
+                    var cities = state.cities;
+                    for(var j = 0; j < cities.length; j++) {
+                      var city = cities[j];
+
+                      var clubs = city.clubs;
+                      for(var k = 0; k < clubs.length; k++){
+                        var club = clubs[k];
+
+                        var address = club.address;
+                        var type = club.type;
+                        var location = club.location;
+                        var lat = location.latitude;
+                        var lng = location.longitude;
+
+                        var marker = new google.maps.Marker({
+                          position: new google.maps.LatLng(lat, lng),
+                          map: map,
+                          draggable: false,
+                          title: address
+                        });
+
+                        if(type === "ACTIVE"){
+                           marker.setIcon("images/active.png");
+                        }
+                        else if(type === "SPORT") {
+                           marker.setIcon("images/sport.png");
+                        }
+                        else if(type === "SUPER-SPORT") {
+                           marker.setIcon("images/super_sport.png");
+                        }
+                        else if(type === "ULTRA-SPORT") {
+                           marker.setIcon("images/ultra_sport.png");
+                        }
+
+                        marker.setMap(map);
+                      }
+                    }
+                  }
+                });
+            }
+            
+            function findAddress() {
+                var addressText = document.getElementById("address").value;
+                var address = {'address' : addressText};
+
+                geocoder.geocode(address, function(results, status){
+                  if (status === google.maps.GeocoderStatus.OK) {
+                    map.setCenter(results[0].geometry.location);
+                  }
+                  else {
+                    alert("Geocode was not successful for the following reason: " + status);
+                  }
+                });
+            }
+        </script>
+    </head>
+
+    <body onload="init();">
+      <table>
+        <tr>
+          <td colspan="4">
+            <div name="map" id="map" style="position:relative; width:900px; height:520px;"/>
+          </td>
+        </tr>
+        <tr>
+          <td><image src="images/active.png"/>Active</td>
+          <td><image src="images/sport.png"/>Sport</td>
+          <td><image src="images/super_sport.png"/>Super Sport</td>
+          <td><image src="images/ultra_sport.png"/> Ultra Sport</td>
+        </tr>
+      </table>
+        
+      <p>
+
+      Search for Address: <input type="text" size="50" name="address" id="address" value="">
+                          <input type="button" onclick="findaddress()" value="find">
+    </body>
+</html>
